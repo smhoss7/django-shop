@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.views import View
 from django.views.generic import TemplateView
 
+from Product.models import Product
+from Product.views import slide_list
 from SiteSetting.models import *
 
 
@@ -16,9 +18,9 @@ class IndexPageView(TemplateView):
     #     return render(request,'index_page.html')
     template_name = 'index_page.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['a'] = 'b'
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context=super().get_context_data(**kwargs)
+        context['last_products']=slide_list(Product.objects.filter(is_published=True).order_by('-id'))[:8]
         return context
 
 

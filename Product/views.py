@@ -18,10 +18,21 @@ from Product.models import Product, Category, Brand
 #                'rate':rate}
 #     return render(request,'Product/product_list.html',context)
 
+
+def slide_list(list,size=4):
+    final_list=[]
+    for i in range(0,len(list),size):
+        final_list.append(list[i:i+size])
+    return final_list
+
 class products(ListView):
     model = Product
     template_name = 'Product/product_list.html'
     paginate_by = 2
+
+
+
+
 
     def get_queryset(self):
         queryset = Product.objects.all().filter(is_published=True)
