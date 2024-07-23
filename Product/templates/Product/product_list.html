@@ -1,0 +1,121 @@
+{% extends 'share/base_layout.html' %}
+{% load thumbnail %}
+{% load render_partial %}
+{% block title %}
+    products list
+{% endblock %}
+
+
+{% block content %}
+    <section>
+        <div class="container">
+            <div class="row">
+
+                <div class="col-sm-9 padding-right">
+                    <div class="features_items"><!--features_items-->
+                        <h2 class="title text-center">محصولات عمده</h2>
+                        {% for product in object_list %}
+                            <div class="col-sm-4">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            {% if product.image %}
+                                                {#                                                <img src="{{ product.image.url }}" alt="">#}
+                                                {% thumbnail product.image "268x250" quality=80 crop='center' as im %}
+                                                    <img src="{{ im.url }}">
+                                                {% endthumbnail %}
+
+                                            {% else %}
+                                                <img src="/static/images/shop/product.jpg" alt="">
+                                            {% endif %}
+                                            <h2>{{ product.price }} ريال</h2>
+                                            <p>{{ product.name }}</p>
+                                            <a href="#" class="btn btn-default add-to-cart"><i
+                                                    class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
+                                        </div>
+                                        <div class="product-overlay">
+                                            <div class="overlay-content">
+                                                <h2>{{ product.price }} ريال</h2>
+                                                <p>{{ product.name }}</p>
+                                                <a href="#" class="btn btn-default add-to-cart"><i
+                                                        class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="choose">
+                                        <ul class="nav nav-pills nav-justified">
+                                            <li><a href="{% url 'product_detail' slug=product.slug %}"><i
+                                                    class="fa fa-plus-square"></i>مشاهده جزییات</a></li>
+                                            <li><a href=""><i class="fa fa-plus-square"></i>مقایسه</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                        <div class="clearfix"></div>
+                        <ul class="pagination">
+                            {#                            <li class="active"><a href="">1</a></li>#}
+                            {#                            <li><a href="">2</a></li>#}
+                            {#                            <li><a href="">3</a></li>#}
+                            {#                            <li><a href="">»</a></li>#}
+
+                            {% if page_obj.has_previous %}
+                                <li><a href="?page={{ page_obj.previous_page_number }}"><<</a></li>
+                            {% endif %}
+
+                            {% for foo in  paginator.page_range %}
+                                <li class="{% if page_obj.number == foo %} active {% endif %}"><a
+                                        href="?page={{ foo }}">{{ foo }}</a></li>
+
+                            {% endfor %}
+
+
+
+                            {% if page_obj.has_next %}
+                                <li><a href="?page={{ page_obj.next_page_number }}">>></a></li>
+                            {% endif %}
+
+                        </ul>
+                    </div><!--features_items-->
+                </div>
+
+                <div class="col-sm-3">
+                    <div class="left-sidebar">
+                       {%  render_partial 'Product.views.product_category' %}
+
+                        {% render_partial 'Product.views.product_brands' %}
+                        <div class="price-range"><!--price-range-->
+                            <h2>فیلتـر قیمـت</h2>
+                            <div class="well">
+                                <div class="slider slider-horizontal" style="width: 139px;">
+                                    <div class="slider-track">
+                                        <div class="slider-selection" style="left: 0.025%; width: 0.0199999%;"></div>
+                                        <div class="slider-handle round left-round" style="left: 0.025%;"></div>
+                                        <div class="slider-handle round" style="left: 0.045%;"></div>
+                                    </div>
+                                    <div class="tooltip top" style="top: -30px; left: -33.4513px;">
+                                        <div class="tooltip-arrow"></div>
+                                        <div class="tooltip-inner">250 : 450</div>
+                                    </div>
+                                    <input type="text" class="span2" value="" data-slider-min="0"
+                                           data-slider-max="1000000" data-slider-step="5" data-slider-value="[250,450]"
+                                           id="sl2" style=""></div>
+                                <br>
+                                <b>1.000.000 ريال</b> <b class="pull-left">0 ريال</b>
+                            </div>
+                        </div><!--/price-range-->
+
+                        <div class="shipping text-center"><!--shipping-->
+                            <img src="/static/images/home/shipping.jpg" alt="">
+                        </div><!--/shipping-->
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+

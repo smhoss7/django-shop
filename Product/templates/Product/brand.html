@@ -1,0 +1,12 @@
+<h2>برند ها</h2>
+<div class="panel-group category-products" id="accordian">
+    {% for brand in brand_list %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a href="{% url 'brand' brand=brand.slug %}">{{ brand.name }}</a>
+                </h4>
+            </div>
+        </div>
+    {% endfor %}
+</div>

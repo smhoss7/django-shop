@@ -1,0 +1,29 @@
+{% load render_partial %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>{% block title %}
+    	
+    {% endblock %}</title>
+    {% include 'share/header_ref.html' %}
+    
+</head><!--/head-->
+
+<body>
+	
+{% render_partial  'Home.views.header_partial'%}
+	
+	{% block content %}
+	{% endblock %}
+	
+	{% render_partial 'Home.views.footer_partial' %}
+	
+    {% include 'share/header_ref.html' %}
+
+  
+</body>
+</html>
